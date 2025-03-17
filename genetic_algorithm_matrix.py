@@ -27,7 +27,7 @@ def genetic_algorithm(experiment, population_size, max_generations, num_voters=2
         population = population[:half]
 
         for a, b in zip(random.sample(range(half), half), random.sample(range(half), half)):
-            offspring = offspring(population[a]['matrix'], population[b]['matrix'])
+            offspring = generate_offspring(population[a]['matrix'], population[b]['matrix'])
             population.append({'matrix': offspring, 'score': utils.score_matrix(offspring, dataset)})
 
         best = max(population, key=lambda e: e['score'])
@@ -40,7 +40,7 @@ def genetic_algorithm(experiment, population_size, max_generations, num_voters=2
 
     return result
 
-def offspring(m1, m2):
+def generate_offspring(m1, m2):
     combined = utils.combine_matrices(m1, m2)
 
     if random.random() < 0.9:

@@ -17,6 +17,6 @@ if __name__ == "__main__":
         embedding_id=embedding_id,
     )
 
-    result = genetic_algorithm_matrix.genetic_algorithm(experiment, 20, 20, 10, [])
+    result = genetic_algorithm_matrix.genetic_algorithm(experiment, 20, 20, 10, [2])
     print(result.score)
-    result.save("xd")
+    result.save("result")

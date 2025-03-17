@@ -1,8 +1,9 @@
 import mapof.elections as mapof
 import json
 
+
 class Result:
-    def __init__(self,name: str,  parameters: dict=None):
+    def __init__(self, name: str, parameters: dict = None):
         self.name = name
         self.matrix = None
         self.election = None
@@ -13,7 +14,7 @@ class Result:
             parameters = {}
         self.parameters = parameters
 
-    def set_result(self, score, election:mapof.OrdinalElection=None, matrix: list[list[float]] =None):
+    def set_result(self, score, election: mapof.OrdinalElection = None, matrix: list[list[float]] = None):
         if not election and not matrix:
             raise Exception("Anything needed")
 
@@ -27,23 +28,26 @@ class Result:
 
         self.score = score
 
-
-
-    def set_parameters(self, parameters:dict):
+    def set_parameters(self, parameters: dict):
         self.parameters = parameters
 
-
-    def add_partial_result(self, iteration, score:float, value, time:float=None):
+    def add_partial_result(self, iteration, score: float, value, time: float = None):
         self.partial_results[iteration] = {'score': score, 'value': value}
 
         if time is not None:
             self.partial_results[iteration]['time'] = time
 
-
-    def save(self, filename:str):
+    def save(self, filename: str):
         if not filename:
             filename = self.name
-        file = open(filename + ".json", "w")
-        json.dump(self, file)
-        file.close()
+        file = open(filename + ".txt", "w")
+        file.write('name: {}'.format(self.name))
+        for parameter in self.parameters:
+            file.write('{}: {}\n'.format(parameter, self.parameters[parameter]))
 
+        if self.partial_results:
+            file.write('iteration, score, time\n')
+            for iteration in self.partial_results:
+                file.write('{},{},{}\n'.format(iteration, self.partial_results[iteration]['score'], self.partial_results[iteration]['time']))
+
+        file.close()
