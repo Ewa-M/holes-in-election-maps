@@ -1,7 +1,9 @@
 import copy
 import random
 import math
-from collections import defaultdict
+
+import prefsampling.ordinal
+
 import utils
 
 import mapof.elections as mapof
@@ -9,7 +11,8 @@ from timeit import default_timer as timer
 from result import Result
 
 
-def anneal(experiment, T_max, alpha, max_iterations, num_voters=20, checkpoints=[], changing_votes=1):
+
+def anneal(experiment, T_max, alpha, max_iterations, num_voters=20, checkpoints=[], changing_votes=1, neigbor_type=None):
     parameters = {
         'max_temperature': T_max,
         'alpha': alpha,
@@ -20,6 +23,12 @@ def anneal(experiment, T_max, alpha, max_iterations, num_voters=20, checkpoints=
     result = Result(parameters=parameters,
                     matrix_only=False)
 
+    neighbor_function = neighbor_random_votes
+    if neigbor_type == 'batch':
+        neighbor_function = neighbor_batch_votes
+    elif neigbor_type == 'mallows':
+        neighbor_function = neighbor_mallows_votes
+
     start = timer()
     temp = T_max
     election = mapof.generate_ordinal_election(
@@ -29,7 +38,7 @@ def anneal(experiment, T_max, alpha, max_iterations, num_voters=20, checkpoints=
     distance = utils.score_election(election, experiment)
 
     for i in range(max_iterations):
-        new_election = neighbour_random_votes(election, changing_votes)
+        new_election = neighbor_function(election, changing_votes)
         d_new = utils.score_election(new_election, experiment)
         delta = d_new - distance
 
@@ -45,10 +54,10 @@ def anneal(experiment, T_max, alpha, max_iterations, num_voters=20, checkpoints=
     result.add_partial_result(max_iterations, distance, election)
     result.set_result(election=election, score=distance)
 
-    return results
+    return result
 
 
-def neighbour_random_votes(election, change_votes):
+def neighbor_random_votes(election, change_votes):
     new_votes = copy.deepcopy(election.votes)
 
     for i in random.sample(range(election.num_voters), change_votes):
@@ -56,29 +65,21 @@ def neighbour_random_votes(election, change_votes):
     return mapof.generate_ordinal_election_from_votes(new_votes)
 
 
-if __name__ == "__main__":
-    experiment_id = 'mallows_triangle_clean'
-    distance_id = 'emd-positionwise'
-    embedding_id = 'fr'
-    anneal_count = 20
+def neighbor_mallows_votes(election, change_votes):
+    new_votes = copy.deepcopy(election.votes)
 
-    experiment = mapof.prepare_offline_ordinal_experiment(
-        experiment_id=experiment_id,
-        distance_id=distance_id,
-        embedding_id=embedding_id,
-    )
+    for i in random.sample(range(election.num_voters), change_votes):
+        new_votes[i] = prefsampling.ordinal.mallows(election.num_voters,
+                                                    election.num_candidates,
+                                                    random.random(),
+                                                    election.votes[i])[0]
+    return mapof.generate_ordinal_election_from_votes(new_votes)
 
-    family_id = "simulated_annealing"
-    experiment.add_empty_family(family_id=family_id, marker='x')
-    checkpoints = [1, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500]
-    for num_voters, changing_votes in [(20, 1), (100, 1), (100, 5), (20, 2), (100, 10)]:
-        time_sum = defaultdict(int)
-        score_sum = defaultdict(int)
-        for i in range(4):
-            results = anneal(experiment, 1000, 1.05, 500, num_voters, checkpoints, changing_votes)
-            for iteration in results:
-                time_sum[iteration] += results[iteration]['time']
-                score_sum[iteration] += results[iteration]['score']
-        for checkpoint in checkpoints:
-            print("{} & {} & {} & {} & {}".format(num_voters, changing_votes, checkpoint, score_sum[checkpoint] / 4,
-                                                  time_sum[checkpoint] / 4))
+
+def neighbor_batch_votes(election, change_votes):
+    new_votes = copy.deepcopy(election.votes)
+    vote = utils.random_vote(election.num_candidates)
+
+    for i in random.sample(range(election.num_voters), change_votes):
+        new_votes[i] = vote
+    return mapof.generate_ordinal_election_from_votes(new_votes)

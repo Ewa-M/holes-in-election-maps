@@ -1,19 +1,18 @@
 
 class Result:
-    def __init__(self, parameters=None, matrix_only=False):
+    def __init__(self, parameters=None):
         self.matrix = None
         self.election = None
         self.score = None
         self.partial_results = {}
-        self.matrix_only = matrix_only
 
         if parameters is None:
             parameters = {}
         self.parameters = parameters
 
     def set_result(self, score, election=None, matrix=None):
-        if not election and not self.matrix_only:
-            raise Exception("Election needed")
+        if not election and not matrix:
+            raise Exception("Anything needed")
 
         if election:
             self.election = election
