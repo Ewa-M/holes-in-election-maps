@@ -27,7 +27,7 @@ def genetic_algorithm(experiment, population_size, max_generations, num_voters=2
         population = population[:half]
 
         for a, b in zip(random.sample(range(half), half), random.sample(range(half), half)):
-            offspring = utils.combine_matrices(population[a]['matrix'], population[b]['matrix'])
+            offspring = offspring(population[a]['matrix'], population[b]['matrix'])
             population.append({'matrix': offspring, 'score': utils.score_matrix(offspring, dataset)})
 
         best = max(population, key=lambda e: e['score'])
@@ -40,6 +40,13 @@ def genetic_algorithm(experiment, population_size, max_generations, num_voters=2
 
     return result
 
+def offspring(m1, m2):
+    combined = utils.combine_matrices(m1, m2)
+
+    if random.random() < 0.9:
+        return combined
+    else:
+        return utils.combine_matrices(combined, utils.ic_matrix(len(m1), 1), 1, 0.5)
 
 if __name__ == "__main__":
     experiment_id = 'mallows_triangle_clean'
