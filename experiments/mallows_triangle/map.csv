@@ -1,0 +1,6 @@
+size;num_candidates;num_voters;culture_id;params;family_id;label;color;alpha;marker;ms;path
+200;10;20;mallows_triangle;{};1D Uniform;1D Uniform;DarkGreen;0.9;o;20;{}
+1;10;20;pseudo_identity;{};ID;ID;blue;1.0;x;20;{}
+1;10;20;pseudo_uniformity;{};UN;UN;black;1.0;x;20;{}
+1;10;20;pseudo_antagonism;{};AN;AN;red;1.0;x;20;{}
+1;10;20;pseudo_stratification;{};ST;ST;green;1.0;x;20;{}

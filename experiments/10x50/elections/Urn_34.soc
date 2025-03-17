@@ -1,0 +1,9 @@
+# FILE NAME: Urn_34.soc
+# DATA TYPE: soc 
+# CULTURE ID: urn 
+# PARAMS: {'alpha': 2.4833762443019487} 
+# NUMBER ALTERNATIVES: 10 
+# NUMBER VOTERS: 50 
+35: 6, 0, 2, 3, 4, 5, 1, 8, 7, 9
+10: 5, 2, 7, 9, 1, 6, 4, 0, 3, 8
+5: 2, 7, 9, 8, 4, 5, 6, 3, 1, 0

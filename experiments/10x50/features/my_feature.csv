@@ -1,0 +1,345 @@
+instance_id;value;time
+Impartial Culture_0;265;0.0
+Impartial Culture_1;255;0.0009922981262207031
+Impartial Culture_2;254;0.0
+Impartial Culture_3;245;0.0
+Impartial Culture_4;249;0.0
+Impartial Culture_5;249;0.0010190010070800781
+Impartial Culture_6;265;0.0
+Impartial Culture_7;243;0.0
+Impartial Culture_8;247;0.0
+Impartial Culture_9;281;0.0
+Impartial Culture_10;250;0.0
+Impartial Culture_11;251;0.0009877681732177734
+Impartial Culture_12;255;0.0
+Impartial Culture_13;243;0.0
+Impartial Culture_14;245;0.0
+Impartial Culture_15;261;0.0
+Impartial Culture_16;271;0.0
+Impartial Culture_17;245;0.0
+Impartial Culture_18;259;0.0
+Impartial Culture_19;265;0.0010237693786621094
+SP by Conitzer_0;274;0.0
+SP by Conitzer_1;287;0.0
+SP by Conitzer_2;305;0.0
+SP by Conitzer_3;304;0.0
+SP by Conitzer_4;286;0.0
+SP by Conitzer_5;286;0.0
+SP by Conitzer_6;294;0.0
+SP by Conitzer_7;285;0.0010006427764892578
+SP by Conitzer_8;295;0.0
+SP by Conitzer_9;300;0.0
+SP by Conitzer_10;287;0.0
+SP by Conitzer_11;291;0.0
+SP by Conitzer_12;271;0.0
+SP by Conitzer_13;299;0.0
+SP by Conitzer_14;282;0.0009987354278564453
+SP by Conitzer_15;276;0.0
+SP by Conitzer_16;285;0.0
+SP by Conitzer_17;287;0.0
+SP by Conitzer_18;290;0.0
+SP by Conitzer_19;295;0.0
+SP by Walsh_0;385;0.0009999275207519531
+SP by Walsh_1;363;0.0
+SP by Walsh_2;370;0.0
+SP by Walsh_3;375;0.0
+SP by Walsh_4;361;0.0
+SP by Walsh_5;369;0.0
+SP by Walsh_6;366;0.0
+SP by Walsh_7;358;0.0010006427764892578
+SP by Walsh_8;376;0.0
+SP by Walsh_9;389;0.0
+SP by Walsh_10;375;0.0
+SP by Walsh_11;377;0.0
+SP by Walsh_12;369;0.0
+SP by Walsh_13;372;0.0
+SP by Walsh_14;368;0.0
+SP by Walsh_15;351;0.00099945068359375
+SP by Walsh_16;369;0.0
+SP by Walsh_17;371;0.0
+SP by Walsh_18;361;0.0
+SP by Walsh_19;366;0.0
+SPOC_0;264;0.0
+SPOC_1;257;0.0
+SPOC_2;265;0.0
+SPOC_3;235;0.0010013580322265625
+SPOC_4;262;0.0
+SPOC_5;246;0.0
+SPOC_6;250;0.0
+SPOC_7;252;0.0
+SPOC_8;247;0.0
+SPOC_9;262;0.0
+SPOC_10;254;0.0009703636169433594
+SPOC_11;271;0.0
+SPOC_12;246;0.0
+SPOC_13;243;0.0
+SPOC_14;278;0.0010006427764892578
+SPOC_15;245;0.0
+SPOC_16;274;0.0
+SPOC_17;255;0.0
+SPOC_18;240;0.0
+SPOC_19;272;0.001003265380859375
+Single-Crossing_0;364;0.0
+Single-Crossing_1;316;0.0
+Single-Crossing_2;366;0.0
+Single-Crossing_3;362;0.0
+Single-Crossing_4;340;0.0
+Single-Crossing_5;400;0.0010063648223876953
+Single-Crossing_6;335;0.0
+Single-Crossing_7;381;0.0
+Single-Crossing_8;390;0.0
+Single-Crossing_9;369;0.0
+Single-Crossing_10;350;0.0
+Single-Crossing_11;360;0.0
+Single-Crossing_12;372;0.001018524169921875
+Single-Crossing_13;388;0.0
+Single-Crossing_14;374;0.0
+Single-Crossing_15;366;0.0
+Single-Crossing_16;356;0.0
+Single-Crossing_17;350;0.0
+Single-Crossing_18;365;0.0
+Single-Crossing_19;352;0.0009999275207519531
+1D Interval_0;298;0.0
+1D Interval_1;323;0.0
+1D Interval_2;296;0.0
+1D Interval_3;285;0.0
+1D Interval_4;290;0.0
+1D Interval_5;301;0.0
+1D Interval_6;287;0.0
+1D Interval_7;305;0.0010027885437011719
+1D Interval_8;284;0.0
+1D Interval_9;290;0.0
+1D Interval_10;299;0.0
+1D Interval_11;294;0.0
+1D Interval_12;282;0.0
+1D Interval_13;284;0.0
+1D Interval_14;270;0.0
+1D Interval_15;276;0.000997304916381836
+1D Interval_16;280;0.0
+1D Interval_17;291;0.0
+1D Interval_18;277;0.0
+1D Interval_19;293;0.0
+2D Disc_0;293;0.0
+2D Disc_1;303;0.0
+2D Disc_2;328;0.0
+2D Disc_3;307;0.0009996891021728516
+2D Disc_4;330;0.0
+2D Disc_5;303;0.0
+2D Disc_6;313;0.0
+2D Disc_7;345;0.0
+2D Disc_8;323;0.0
+2D Disc_9;326;0.0
+2D Disc_10;318;0.0
+2D Disc_11;320;0.0009999275207519531
+2D Disc_12;309;0.0
+2D Disc_13;295;0.0
+2D Disc_14;314;0.0
+2D Disc_15;317;0.0
+2D Disc_16;344;0.0
+2D Disc_17;324;0.0
+2D Disc_18;314;0.0010075569152832031
+2D Disc_19;287;0.0
+3D Cube_0;357;0.0
+3D Cube_1;352;0.0
+3D Cube_2;336;0.0
+3D Cube_3;325;0.0
+3D Cube_4;333;0.0
+3D Cube_5;288;0.0
+3D Cube_6;360;0.00099945068359375
+3D Cube_7;303;0.0
+3D Cube_8;292;0.0
+3D Cube_9;295;0.0
+3D Cube_10;297;0.0009784698486328125
+3D Cube_11;321;0.0
+3D Cube_12;312;0.0
+3D Cube_13;342;0.0
+3D Cube_14;304;0.0
+3D Cube_15;256;0.0010042190551757812
+3D Cube_16;319;0.0
+3D Cube_17;306;0.0
+3D Cube_18;352;0.0
+3D Cube_19;334;0.0
+2D Sphere_0;257;0.0
+2D Sphere_1;247;0.0009877681732177734
+2D Sphere_2;235;0.0
+2D Sphere_3;251;0.0
+2D Sphere_4;259;0.0
+2D Sphere_5;239;0.0
+2D Sphere_6;261;0.0
+2D Sphere_7;263;0.0010313987731933594
+2D Sphere_8;247;0.0
+2D Sphere_9;252;0.0
+2D Sphere_10;248;0.0
+2D Sphere_11;252;0.0
+2D Sphere_12;249;0.0
+2D Sphere_13;241;0.0
+2D Sphere_14;262;0.0
+2D Sphere_15;247;0.000997304916381836
+2D Sphere_16;243;0.0
+2D Sphere_17;245;0.0
+2D Sphere_18;235;0.0
+2D Sphere_19;244;0.0
+Urn_0;410;0.0
+Urn_1;269;0.0
+Urn_2;255;0.0010001659393310547
+Urn_3;359;0.0
+Urn_4;356;0.0
+Urn_5;350;0.0
+Urn_6;267;0.0
+Urn_7;321;0.0
+Urn_8;393;0.0
+Urn_9;342;0.0
+Urn_10;296;0.0009999275207519531
+Urn_11;300;0.0
+Urn_12;408;0.0
+Urn_13;338;0.0
+Urn_14;335;0.0
+Urn_15;368;0.0
+Urn_16;340;0.0
+Urn_17;444;0.0009634494781494141
+Urn_18;267;0.0
+Urn_19;307;0.0
+Urn_20;419;0.0
+Urn_21;336;0.0009996891021728516
+Urn_22;382;0.0
+Urn_23;362;0.0
+Urn_24;353;0.0
+Urn_25;422;0.0
+Urn_26;295;0.0
+Urn_27;410;0.001001596450805664
+Urn_28;409;0.0
+Urn_29;401;0.0
+Urn_30;310;0.0
+Urn_31;354;0.0
+Urn_32;316;0.0
+Urn_33;257;0.0
+Urn_34;370;0.0
+Urn_35;264;0.0010378360748291016
+Urn_36;256;0.0
+Urn_37;315;0.0
+Urn_38;309;0.0
+Urn_39;420;0.0
+Urn_40;406;0.0
+Urn_41;313;0.0009620189666748047
+Urn_42;403;0.0
+Urn_43;388;0.0
+Urn_44;276;0.0
+Urn_45;438;0.00099945068359375
+Urn_46;385;0.0
+Urn_47;353;0.0
+Urn_48;384;0.0
+Urn_49;307;0.0
+Urn_50;346;0.0
+Urn_51;376;0.0010001659393310547
+Urn_52;291;0.0
+Urn_53;347;0.0
+Urn_54;307;0.0
+Urn_55;368;0.0
+Urn_56;332;0.0010368824005126953
+Urn_57;412;0.0
+Urn_58;365;0.0
+Urn_59;368;0.0
+Norm-Mallows_0;405;0.0
+Norm-Mallows_1;352;0.0
+Norm-Mallows_2;266;0.0
+Norm-Mallows_3;449;0.0
+Norm-Mallows_4;316;0.0010023117065429688
+Norm-Mallows_5;442;0.0
+Norm-Mallows_6;330;0.0
+Norm-Mallows_7;430;0.0
+Norm-Mallows_8;428;0.0
+Norm-Mallows_9;357;0.0
+Norm-Mallows_10;417;0.0009968280792236328
+Norm-Mallows_11;268;0.0
+Norm-Mallows_12;259;0.0
+Norm-Mallows_13;444;0.0
+Norm-Mallows_14;412;0.0
+Norm-Mallows_15;325;0.0
+Norm-Mallows_16;266;0.0
+Norm-Mallows_17;447;0.0
+Norm-Mallows_18;445;0.0010027885437011719
+Norm-Mallows_19;424;0.0
+Norm-Mallows_20;417;0.0
+Norm-Mallows_21;442;0.0
+Norm-Mallows_22;429;0.0
+Norm-Mallows_23;248;0.0
+Norm-Mallows_24;360;0.0
+Norm-Mallows_25;414;0.0
+Norm-Mallows_26;284;0.0009975433349609375
+Norm-Mallows_27;256;0.0
+Norm-Mallows_28;426;0.0
+Norm-Mallows_29;406;0.0
+Norm-Mallows_30;446;0.0
+Norm-Mallows_31;286;0.0
+Norm-Mallows_32;424;0.0
+Norm-Mallows_33;361;0.0010018348693847656
+Norm-Mallows_34;297;0.0
+Norm-Mallows_35;417;0.0
+Norm-Mallows_36;284;0.0
+Norm-Mallows_37;429;0.0
+Norm-Mallows_38;357;0.0
+Norm-Mallows_39;292;0.0
+Norm-Mallows_40;307;0.0
+Norm-Mallows_41;250;0.0009999275207519531
+Norm-Mallows_42;312;0.0
+Norm-Mallows_43;413;0.0
+Norm-Mallows_44;434;0.0
+Norm-Mallows_45;446;0.0
+Norm-Mallows_46;251;0.0
+Norm-Mallows_47;306;0.0
+Norm-Mallows_48;405;0.0
+Norm-Mallows_49;349;0.000997781753540039
+Norm-Mallows_50;257;0.0
+Norm-Mallows_51;314;0.0
+Norm-Mallows_52;251;0.0
+Norm-Mallows_53;396;0.0
+Norm-Mallows_54;328;0.0
+Norm-Mallows_55;440;0.0009646415710449219
+Norm-Mallows_56;372;0.0
+Norm-Mallows_57;437;0.0
+Norm-Mallows_58;411;0.0
+Norm-Mallows_59;256;0.0010001659393310547
+GS Balanced_0;241;0.0
+GS Balanced_1;248;0.0
+GS Balanced_2;257;0.0
+GS Balanced_3;237;0.0
+GS Balanced_4;281;0.0
+GS Balanced_5;262;0.00102996826171875
+GS Balanced_6;246;0.0
+GS Balanced_7;244;0.0
+GS Balanced_8;236;0.0
+GS Balanced_9;236;0.0
+GS Balanced_10;268;0.0
+GS Balanced_11;242;0.0010099411010742188
+GS Balanced_12;242;0.0
+GS Balanced_13;242;0.0
+GS Balanced_14;248;0.0
+GS Balanced_15;238;0.0
+GS Balanced_16;243;0.0
+GS Balanced_17;266;0.0
+GS Balanced_18;242;0.0009982585906982422
+GS Balanced_19;268;0.0
+GS Caterpillar_0;258;0.0
+GS Caterpillar_1;256;0.0
+GS Caterpillar_2;245;0.0
+GS Caterpillar_3;270;0.0
+GS Caterpillar_4;254;0.0
+GS Caterpillar_5;250;0.0
+GS Caterpillar_6;240;0.0009975433349609375
+GS Caterpillar_7;257;0.0
+GS Caterpillar_8;247;0.0
+GS Caterpillar_9;261;0.0
+GS Caterpillar_10;256;0.0
+GS Caterpillar_11;270;0.0
+GS Caterpillar_12;245;0.0
+GS Caterpillar_13;279;0.0010006427764892578
+GS Caterpillar_14;261;0.0
+GS Caterpillar_15;270;0.0
+GS Caterpillar_16;246;0.0
+GS Caterpillar_17;243;0.0
+GS Caterpillar_18;243;0.0
+GS Caterpillar_19;278;0.0
+ID;;0.0
+AN;;0.0
+ST;;0.0
+UN;;0.0

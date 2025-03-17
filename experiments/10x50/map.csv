@@ -1,0 +1,18 @@
+size;num_candidates;num_voters;culture_id;params;family_id;label;color;alpha;marker;ms;path
+20;10;50;impartial;{};Impartial Culture;Impartial Culture;black;0.9;o;10;{}
+20;10;50;single_peaked_conitzer;{};SP by Conitzer;SP by Conitzer;saddlebrown;0.6;o;10;{}
+20;10;50;single_peaked_walsh;{};SP by Walsh;SP by Walsh;olive;0.8;o;10;{}
+20;10;50;spoc;{};SPOC;SPOC;maroon;0.8;o;10;{}
+20;10;50;single_crossing;{};Single-Crossing;Single-Crossing;turquoise;0.9;o;10;{}
+20;10;50;euclidean;{'num_dimensions': 1, 'space': 'uniform'};1D Interval;Interval;DarkGreen;0.9;o;10;{}
+20;10;50;euclidean;{'num_dimensions': 2, 'space': 'ball'};2D Disc;Disc;Green;0.9;o;10;{}
+20;10;50;euclidean;{'num_dimensions': 3, 'space': 'uniform'};3D Cube;Cube;ForestGreen;0.7;o;10;{}
+20;10;50;euclidean;{'num_dimensions': 2, 'space': 'sphere'};2D Sphere;Circle;black;0.2;o;10;{}
+60;10;50;urn;{};Urn;Urn;orange;1.0;o;10;{}
+60;10;50;norm_mallows;{};Norm-Mallows;Norm-Mallows;blue;0.9;o;10;{}
+20;10;50;group_separable;{'tree_sampler': 'balanced'};GS Balanced;GS Balanced;hotpink;0.8;o;10;{}
+20;10;50;group_separable;{'tree_sampler': 'caterpillar'};GS Caterpillar;GS Caterpillar;purple;0.8;o;10;{}
+1;10;50;pseudo_identity;{};ID;ID;blue;1.0;x;10;{}
+1;10;50;pseudo_antagonism;{};AN;AN;red;1.0;x;10;{}
+1;10;50;pseudo_stratification;{};ST;ST;green;1.0;x;10;{}
+1;10;50;pseudo_uniformity;{};UN;UN;black;1.0;x;10;{}

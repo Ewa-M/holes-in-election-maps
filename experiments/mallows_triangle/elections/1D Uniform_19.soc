@@ -1,0 +1,10 @@
+# FILE NAME: 1D Uniform_19.soc
+# DATA TYPE: soc 
+# CULTURE ID: mallows_triangle 
+# PARAMS: {'normphi': 0.006572509575839325, 'phi': 0.016223907470703125, 'weight': 0.4500847050876667, 'tint': 0.4500847050876667} 
+# NUMBER ALTERNATIVES: 10 
+# NUMBER VOTERS: 20 
+10: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+7: 9, 8, 7, 6, 5, 4, 3, 2, 1, 0
+2: 1, 0, 2, 3, 4, 5, 6, 7, 8, 9
+1: 9, 8, 7, 6, 5, 4, 2, 3, 1, 0
