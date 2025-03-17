@@ -18,7 +18,7 @@ def genetic_algorithm(experiment: mapof.OrdinalElectionExperiment, population_si
         'generations': max_generations
     }
 
-    result = Result(parameters)
+    result = Result("genetic_algorithm_votes", parameters)
 
     start = timer()
     initial_elections = [mapof.generate_ordinal_election(

@@ -13,7 +13,7 @@ def genetic_algorithm(experiment, population_size, max_generations, num_voters=2
         'generations': max_generations
         }
 
-    result = Result(parameters)
+    result = Result("genetic_algorithm_matrix",parameters)
 
     start = timer()
     initial_matrices = [utils.ic_matrix(experiment.default_num_candidates, experiment.default_num_candidates) for _ in range(population_size)]

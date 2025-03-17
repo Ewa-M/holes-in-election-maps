@@ -1,6 +1,9 @@
+import mapof.elections as mapof
+import json
 
 class Result:
-    def __init__(self, parameters=None):
+    def __init__(self,name: str,  parameters: dict=None):
+        self.name = name
         self.matrix = None
         self.election = None
         self.score = None
@@ -10,7 +13,7 @@ class Result:
             parameters = {}
         self.parameters = parameters
 
-    def set_result(self, score, election=None, matrix=None):
+    def set_result(self, score, election:mapof.OrdinalElection=None, matrix: list[list[float]] =None):
         if not election and not matrix:
             raise Exception("Anything needed")
 
@@ -26,11 +29,21 @@ class Result:
 
 
 
-    def set_parameters(self, parameters):
+    def set_parameters(self, parameters:dict):
         self.parameters = parameters
 
-    def add_partial_result(self, iteration, score, value, time=None):
+
+    def add_partial_result(self, iteration, score:float, value, time:float=None):
         self.partial_results[iteration] = {'score': score, 'value': value}
 
         if time is not None:
             self.partial_results[iteration]['time'] = time
+
+
+    def save(self, filename:str):
+        if not filename:
+            filename = self.name
+        file = open(filename + ".json", "w")
+        json.dump(self, file)
+        file.close()
+

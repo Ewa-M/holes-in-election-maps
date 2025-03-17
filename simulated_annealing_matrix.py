@@ -15,8 +15,7 @@ def anneal(experiment, T_max, alpha, initial_matrix, iterations, neighbour_dista
         'iterations': iterations,
         'initial_matrix': initial_matrix
     }
-    result = Result(parameters=parameters,
-                    matrix_only=True)
+    result = Result("simulated_annealing_matrix", parameters)
 
     dataset = [election.get_frequency_matrix() for election in experiment.elections.values()]
     start = timer()

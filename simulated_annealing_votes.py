@@ -20,8 +20,7 @@ def anneal(experiment, T_max, alpha, max_iterations, num_voters=20, checkpoints=
         'changing_votes': changing_votes,
         'iterations': max_iterations
     }
-    result = Result(parameters=parameters,
-                    matrix_only=False)
+    result = Result("simulated_annealing_votes", parameters)
 
     neighbor_function = neighbor_random_votes
     if neigbor_type == 'batch':
