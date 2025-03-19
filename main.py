@@ -1,50 +1,13 @@
-from collections import defaultdict
 
 import mapof.elections as mapof
 
-import genetic_algorithm_matrix
-import genetic_algorithm_votes
+import result
 import simulated_annealing_matrix
-import simulated_annealing_votes
 import utils
 
+#['random', 'batch', 'mallows_random', "mallows_adaptive"]
 
-def simulated_annealing_votes_test():
-    experiment_id = '10x50'
-    distance_id = 'emd-positionwise'
-    embedding_id = 'fr'
-
-    experiment = mapof.prepare_offline_ordinal_experiment(
-        experiment_id=experiment_id,
-        distance_id=distance_id,
-        embedding_id=embedding_id,
-    )
-
-    iterations = 1000
-    checkpoints = [i for i in range(iterations)]
-    cooling_schedule = 'exponential'
-
-    for neighbor_strategy in ['mallows_random', "mallows_adaptive"]:
-        for changing_votes in [1, 2, 5, 10]:
-            mean = 0
-            print("\n",neighbor_strategy, changing_votes)
-            for i in range(5):
-                s = simulated_annealing_votes.anneal(
-                    experiment=experiment,
-                    max_temperature=1000,
-                    alpha=0.95,
-                    max_iterations=250,
-                    num_voters=experiment.default_num_voters,
-                    checkpoints=[],
-                    changing_votes=changing_votes,
-                    neighbor_strategy=neighbor_strategy,
-                    cooling_schedule=cooling_schedule).score
-                print(s)
-                mean += s
-            print("mean", mean)
-
-
-def simulated_annealing_matrix():
+def simulated_annealing_matrix_adaptive_linear_test():
     experiment_id = '10x50'
     distance_id = 'emd-positionwise'
     embedding_id = 'fr'
@@ -54,17 +17,25 @@ def simulated_annealing_matrix():
         distance_id=distance_id,
         embedding_id=embedding_id
     )
-    for a in ["constant", 'adaptive']:
-        mean = 0
-        for i in range(5):
-            s = simulated_annealing_matrix.anneal(experiment, 1000, 0.95,
-                                                  utils.ic_matrix(experiment.default_num_candidates,
-                                                                  experiment.default_num_voters), 250, 1, [], a).score
-            print(s)
-            mean += s
-        print(a, mean)
+
+    cooling_schedule = 'linear'
+    iterations = 3
+    checkpoints = [i for i in range(iterations)]
+
+    for max_temperature, alpha in [(1, 0.001), (2, 0.002), (0.5, 0.0005), (1, 0.009)]:
+        function = lambda: simulated_annealing_matrix.anneal(experiment,
+                                                             max_temperature,
+                                                             alpha,
+                                                             utils.ic_matrix(experiment.default_num_candidates,
+                                                                             experiment.default_num_voters),
+                                                             iterations,
+                                                             1,
+                                                             checkpoints,
+                                                             "adaptive",
+                                                             cooling_schedule)
+
+        result.experiment(function, "_".join(["sa", str(max_temperature), str(alpha), cooling_schedule, "adaptive"]), 2)
 
 
 if __name__ == "__main__":
-    simulated_annealing_votes_test()
-    # simulated_annealing_matrix()
+    simulated_annealing_matrix_adaptive_linear_test()

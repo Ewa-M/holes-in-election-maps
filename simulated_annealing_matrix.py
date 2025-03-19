@@ -9,24 +9,22 @@ from result import Result
 import utils
 
 
-def anneal(experiment:mapof.OrdinalElectionExperiment,
+def anneal(experiment: mapof.OrdinalElectionExperiment,
            max_temperature: float,
            alpha: float,
            initial_matrix: list[list[float]],
            max_iterations: int,
-           neighbor_weight: float=1,
-           checkpoints: list[int]=[],
+           neighbor_weight: float = 1,
+           checkpoints: list[int] = [],
            neighbor_strategy: str = 'constant',
            cooling_schedule='linear'
            ) -> Result:
     neighbor_weight_function = get_neighbor_weight_function(neighbor_strategy, neighbor_weight)
-    cooling_schedule_function = get_cooling_schedule_function(cooling_schedule)
-
+    cooling_schedule_function = get_cooling_schedule_function(cooling_schedule, max_temperature, alpha)
     parameters = {
         'max_temperature': max_temperature,
         'alpha': alpha,
         'iterations': max_iterations,
-        'initial_matrix': initial_matrix,
         'neighbor_strategy': neighbor_strategy,
         'cooling_schedule': cooling_schedule
     }
@@ -50,18 +48,21 @@ def anneal(experiment:mapof.OrdinalElectionExperiment,
             matrix = m_new
             distance = d_new
 
-        temperature = cooling_schedule_function(temperature, alpha)
+        temperature = cooling_schedule_function(i)
 
     result.add_partial_result(max_iterations, distance, matrix)
     result.set_result(matrix=matrix, score=distance)
 
     return result
 
-def get_cooling_schedule_function(cooling_schedule):
+
+def get_cooling_schedule_function(cooling_schedule, max_temperature, alpha):
     if cooling_schedule == 'linear':
-        return lambda temperature, alpha: temperature - alpha
+        return lambda iteration: max_temperature - alpha * iteration
     elif cooling_schedule == 'exponential':
-        return lambda temperature, alpha: temperature * alpha
+        return lambda iteration: max_temperature * (alpha ** iteration)
+    elif cooling_schedule == 'logarithmic':
+        return lambda iteration: max_temperature / math.log(iteration + 1)
     else:
         raise ValueError('Invalid cooling schedule')
 
@@ -73,6 +74,7 @@ def get_neighbor_weight_function(neighbor_strategy, weight):
         return lambda temperature, max_temperature: weight
     else:
         raise ValueError('Invalid neighbor strategy')
+
 
 def neighbor(matrix, neighbour_weight):
     result = copy.deepcopy(matrix)
