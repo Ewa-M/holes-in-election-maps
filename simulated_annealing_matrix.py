@@ -8,76 +8,73 @@ import mapof.elections as mapof
 from result import Result
 import utils
 
-def anneal(experiment, T_max, alpha, initial_matrix, iterations, neighbour_distance=1, checkpoints=[]):
+
+def anneal(experiment:mapof.OrdinalElectionExperiment,
+           max_temperature: float,
+           alpha: float,
+           initial_matrix: list[list[float]],
+           max_iterations: int,
+           neighbor_weight: float=1,
+           checkpoints: list[int]=[],
+           neighbor_strategy: str = 'constant',
+           cooling_schedule='linear'
+           ) -> Result:
+    neighbor_weight_function = get_neighbor_weight_function(neighbor_strategy, neighbor_weight)
+    cooling_schedule_function = get_cooling_schedule_function(cooling_schedule)
+
     parameters = {
-        'max_temperature': T_max,
+        'max_temperature': max_temperature,
         'alpha': alpha,
-        'iterations': iterations,
-        'initial_matrix': initial_matrix
+        'iterations': max_iterations,
+        'initial_matrix': initial_matrix,
+        'neighbor_strategy': neighbor_strategy,
+        'cooling_schedule': cooling_schedule
     }
     result = Result("simulated_annealing_matrix", parameters)
 
     dataset = [election.get_frequency_matrix() for election in experiment.elections.values()]
     start = timer()
     matrix = copy.deepcopy(initial_matrix)
-    temp = T_max
+    temperature = max_temperature
     distance = utils.score_matrix(matrix, dataset)
 
-    for i in range(iterations):
-        m_new = neighbour(matrix, neighbour_distance)
-        d_new = utils.score_matrix(matrix, dataset)
-        delta = d_new - distance
-
-        if delta > 0 or math.exp(delta / temp) >= random.random():
-            matrix = m_new
-            distance = d_new
-
-        temp = temp / alpha
-
+    for i in range(max_iterations):
         if i in checkpoints:
             result.add_partial_result(i, distance, matrix, timer() - start)
 
-    result.add_partial_result(iterations, distance, matrix)
+        m_new = neighbor(matrix, neighbor_weight_function(temperature, max_temperature))
+        d_new = utils.score_matrix(matrix, dataset)
+        delta = d_new - distance
+
+        if delta > 0 or math.exp(delta / temperature) >= random.random():
+            matrix = m_new
+            distance = d_new
+
+        temperature = cooling_schedule_function(temperature, alpha)
+
+    result.add_partial_result(max_iterations, distance, matrix)
     result.set_result(matrix=matrix, score=distance)
 
     return result
 
+def get_cooling_schedule_function(cooling_schedule):
+    if cooling_schedule == 'linear':
+        return lambda temperature, alpha: temperature - alpha
+    elif cooling_schedule == 'exponential':
+        return lambda temperature, alpha: temperature * alpha
+    else:
+        raise ValueError('Invalid cooling schedule')
 
-def neighbour(matrix, neighbour_distance):
+
+def get_neighbor_weight_function(neighbor_strategy, weight):
+    if neighbor_strategy == 'adaptive':
+        return lambda temperature, max_temperature: temperature / max_temperature
+    elif neighbor_strategy == 'constant' and weight:
+        return lambda temperature, max_temperature: weight
+    else:
+        raise ValueError('Invalid neighbor strategy')
+
+def neighbor(matrix, neighbour_weight):
     result = copy.deepcopy(matrix)
     permutation = utils.ic_matrix(len(matrix), 1)
-
-    return utils.combine_matrices(result, permutation, 1, neighbour_distance)
-
-
-if __name__ == "__main__":
-    experiment_id = 'mallows_triangle_clean'
-    distance_id = 'emd-positionwise'
-    embedding_id = 'fr'
-    anneal_count = 20
-
-    experiment = mapof.prepare_offline_ordinal_experiment(
-        experiment_id=experiment_id,
-        distance_id=distance_id,
-        embedding_id=embedding_id,
-    )
-
-    checkpoints = [1, 50, 100, 150, 200, 250]
-    for max_temperature in [1000, 2000, 3000]:
-        for alpha in [1.05, 1.025, 1.075]:
-            for num_voters in [20, 50, 100]:
-                time_sum = defaultdict(int)
-                score_sum = defaultdict(int)
-                for i in range(4):
-                    initial_matrix = mapof.generate_ordinal_election(
-                        culture_id='impartial',
-                        num_voters=num_voters,
-                        num_candidates=experiment.default_num_candidates
-                    ).get_frequency_matrix()
-                    results = anneal(experiment, max_temperature, alpha, initial_matrix, 250, 1, checkpoints)
-                    for iteration in results:
-                        time_sum[iteration] += results[iteration]['time']
-                        score_sum[iteration] += results[iteration]['score']
-                for checkpoint in checkpoints:
-                    print("{} & {} & {} & {} & {} & {}".format(max_temperature, alpha, num_voters, checkpoint,
-                                                               score_sum[checkpoint] / 4, time_sum[checkpoint] / 4))
+    return utils.combine_matrices(result, permutation, 1, neighbour_weight)

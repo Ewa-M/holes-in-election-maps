@@ -33,21 +33,32 @@ class Result:
 
     def add_partial_result(self, iteration, score: float, value, time: float = None):
         self.partial_results[iteration] = {'score': score, 'value': value}
-
-        if time is not None:
-            self.partial_results[iteration]['time'] = time
+        self.partial_results[iteration]['time'] = time
 
     def save(self, filename: str):
         if not filename:
             filename = self.name
-        file = open(filename + ".txt", "w")
-        file.write('name: {}'.format(self.name))
+        file = open("results\\" + filename + ".txt", "w")
+        file.write(self.name + "\n")
+
+        names = ""
+        values = ""
         for parameter in self.parameters:
-            file.write('{}: {}\n'.format(parameter, self.parameters[parameter]))
+            names += parameter
+            names += ","
+            values += str(self.parameters[parameter])
+            values += ","
+
+        names = names[:-1] + '\n'
+        values = values[:-1] + '\n'
+        file.write(names)
+        file.write(values)
 
         if self.partial_results:
             file.write('iteration, score, time\n')
             for iteration in self.partial_results:
-                file.write('{},{},{}\n'.format(iteration, self.partial_results[iteration]['score'], self.partial_results[iteration]['time']))
+                file.write(str(iteration) + ",")
+                file.write(str(self.partial_results[iteration]['score']) + ',')
+                file.write(str(self.partial_results[iteration]['time']) + '\n')
 
         file.close()

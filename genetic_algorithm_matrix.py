@@ -47,23 +47,3 @@ def generate_offspring(m1, m2):
         return combined
     else:
         return utils.combine_matrices(combined, utils.ic_matrix(len(m1), 1), 1, 0.5)
-
-if __name__ == "__main__":
-    experiment_id = 'mallows_triangle_clean'
-    distance_id = 'emd-positionwise'
-    embedding_id = 'fr'
-    anneal_count = 20
-
-    experiment = mapof.prepare_offline_ordinal_experiment(
-        experiment_id=experiment_id,
-        distance_id=distance_id,
-        embedding_id=embedding_id,
-    )
-
-    family_id = "genetic_algorithm"
-    experiment.add_empty_family(family_id=family_id, marker='x')
-    generations = [1, 50, 100, 150, 200, 250]
-    for population_size in [10, 20, 50]:
-        for num_voters in [20, 50, 100]:
-            time_sum = defaultdict(int)
-            score_sum = defaultdict(int)
