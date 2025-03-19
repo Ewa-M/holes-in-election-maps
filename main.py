@@ -19,7 +19,7 @@ def simulated_annealing_matrix_adaptive_linear_test():
     )
 
     cooling_schedule = 'linear'
-    iterations = 3
+    iterations = 1000
     checkpoints = [i for i in range(iterations)]
 
     for max_temperature, alpha in [(1, 0.001), (2, 0.002), (0.5, 0.0005), (1, 0.009)]:
@@ -34,7 +34,7 @@ def simulated_annealing_matrix_adaptive_linear_test():
                                                              "adaptive",
                                                              cooling_schedule)
 
-        result.experiment(function, "_".join(["sa", str(max_temperature), str(alpha), cooling_schedule, "adaptive"]), 2)
+        result.experiment(function, "_".join(["sa", str(max_temperature), str(alpha), cooling_schedule, "adaptive"]), 100)
 
 
 if __name__ == "__main__":
