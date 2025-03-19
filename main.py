@@ -24,7 +24,7 @@ def simulated_annealing_votes_test():
     checkpoints = [i for i in range(iterations)]
     cooling_schedule = 'exponential'
 
-    for neighbor_strategy in ['random', 'batch', 'mallows_random', "mallows_adaptive"]:
+    for neighbor_strategy in ['mallows_random', "mallows_adaptive"]:
         for changing_votes in [1, 2, 5, 10]:
             mean = 0
             print("\n",neighbor_strategy, changing_votes)
