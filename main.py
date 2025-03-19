@@ -27,7 +27,7 @@ def simulated_annealing_votes_test():
     for neighbor_strategy in ['random', 'batch', 'mallows_random', "mallows_adaptive"]:
         for changing_votes in [1, 2, 5, 10]:
             mean = 0
-            print("\n\n\n", neighbor_strategy, changing_votes)
+            print("\n",neighbor_strategy, changing_votes)
             for i in range(5):
                 s = simulated_annealing_votes.anneal(
                     experiment=experiment,
