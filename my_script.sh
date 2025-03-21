@@ -6,11 +6,7 @@ if [ "$#" -lt 1 ]; then
   exit 1
 fi
 
-# Run the command once with all the provided arguments
-"$@"
-
-# Run the command 9 more times with the same arguments
-for i in {1..9}
+for i in {1..20}
 do
   "$@"
 done
