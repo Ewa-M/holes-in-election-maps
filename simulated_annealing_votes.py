@@ -20,6 +20,7 @@ def anneal(experiment: mapof.OrdinalElectionExperiment,
            cooling_schedule: str = 'linear',
            result_id: str = ""
            ) -> Result:
+    print("kurwa")
     parameters = {
         'experiment': experiment.experiment_id,
         'method_name': 'simulated_annealing_voted',
@@ -31,7 +32,7 @@ def anneal(experiment: mapof.OrdinalElectionExperiment,
     }
 
     neighbor_function = get_neighbor_function(neighbor_strategy)
-    cooling_schedule_function = get_cooling_schedule_function(cooling_schedule, max_temperature, alpha)
+    cooling_schedule_function = utils.get_cooling_schedule_function(cooling_schedule, max_temperature, alpha)
     result = Result(result_id, parameters)
 
     temperature = max_temperature
@@ -57,18 +58,6 @@ def anneal(experiment: mapof.OrdinalElectionExperiment,
     result.set_result(election=election, score=score)
 
     return result
-
-
-def get_cooling_schedule_function(cooling_schedule, max_temperature, alpha):
-    if cooling_schedule == 'linear':
-        return lambda iteration: max_temperature - alpha * iteration
-    elif cooling_schedule == 'exponential':
-        return lambda iteration: max_temperature * (alpha ** iteration)
-    elif cooling_schedule == 'logarithmic':
-        return lambda iteration: max_temperature / math.log(iteration + 1)
-    else:
-        raise ValueError('Invalid cooling schedule')
-
 
 def get_neighbor_function(neighbor_strategy):
     if neighbor_strategy == 'random':

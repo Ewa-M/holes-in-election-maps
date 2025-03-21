@@ -1,3 +1,4 @@
+import math
 import random
 from mapof.core.distances.inner_distances import emd
 from mapof.elections.distances.main_ordinal_distances import positionwise_distance
@@ -34,6 +35,16 @@ def __normalize_matrix(matrix: list[list]) -> list[list]:
             matrix[i][j] /= denominator
 
     return matrix
+
+def get_cooling_schedule_function(cooling_schedule, max_temperature, alpha):
+    if cooling_schedule in ['linear', 'lin']:
+        return lambda iteration: max_temperature - alpha * iteration
+    elif cooling_schedule in ['exponential', 'exp']:
+        return lambda iteration: max_temperature * (alpha ** iteration)
+    elif cooling_schedule in ['logarithmic', 'log']:
+        return lambda iteration: max_temperature / math.log(iteration + 1)
+    else:
+        raise ValueError('Invalid cooling schedule')
 
 
 def score_election(election, experiment):

@@ -29,7 +29,7 @@ def anneal(
     }
 
     neighbor_weight_function = get_neighbor_weight_function(neighbor_strategy, neighbor_weight)
-    cooling_schedule_function = get_cooling_schedule_function(cooling_schedule, max_temperature, alpha)
+    cooling_schedule_function = utils.get_cooling_schedule_function(cooling_schedule, max_temperature, alpha)
     result = Result(result_id, parameters)
 
     dataset = [election.get_frequency_matrix() for election in experiment.elections.values()]
@@ -55,18 +55,6 @@ def anneal(
     result.set_result(matrix=matrix, score=distance)
 
     return result
-
-
-def get_cooling_schedule_function(cooling_schedule, max_temperature, alpha):
-    if cooling_schedule == 'linear':
-        return lambda iteration: max_temperature - alpha * iteration
-    elif cooling_schedule == 'exponential':
-        return lambda iteration: max_temperature * (alpha ** iteration)
-    elif cooling_schedule == 'logarithmic':
-        return lambda iteration: max_temperature / math.log(iteration + 1)
-    else:
-        raise ValueError('Invalid cooling schedule')
-
 
 def get_neighbor_weight_function(neighbor_strategy, weight):
     if neighbor_strategy == 'adaptive':
