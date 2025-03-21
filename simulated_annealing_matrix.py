@@ -8,37 +8,38 @@ import mapof.elections as mapof
 from result import Result
 import utils
 
-
-def anneal(experiment: mapof.OrdinalElectionExperiment,
-           max_temperature: float,
-           alpha: float,
-           initial_matrix: list[list[float]],
-           max_iterations: int,
-           neighbor_weight: float = 1,
-           checkpoints: list[int] = [],
-           neighbor_strategy: str = 'constant',
-           cooling_schedule='linear'
-           ) -> Result:
-    neighbor_weight_function = get_neighbor_weight_function(neighbor_strategy, neighbor_weight)
-    cooling_schedule_function = get_cooling_schedule_function(cooling_schedule, max_temperature, alpha)
+def anneal(
+    experiment: mapof.OrdinalElectionExperiment,
+    max_temperature: int,
+    alpha: float,
+    max_iterations: int,
+    neighbor_weight: float = 1,
+    neighbor_strategy: str = 'constant',
+    cooling_schedule: str = 'linear',
+    result_id: str = ''
+) -> Result:
     parameters = {
-        'max_temperature': max_temperature,
-        'alpha': alpha,
-        'iterations': max_iterations,
-        'neighbor_strategy': neighbor_strategy,
+        'experiment': experiment.experiment_id,
+        'method_name': 'simulated_annealing_matrix',
+        'max_temperature': str(max_temperature),
+        'alpha': str(alpha),
+        'neighbor_weight': str(neighbor_weight),
+        'neighbour_strategy': neighbor_strategy,
         'cooling_schedule': cooling_schedule
     }
-    result = Result("simulated_annealing_matrix", parameters)
+
+    neighbor_weight_function = get_neighbor_weight_function(neighbor_strategy, neighbor_weight)
+    cooling_schedule_function = get_cooling_schedule_function(cooling_schedule, max_temperature, alpha)
+    result = Result(result_id, parameters)
 
     dataset = [election.get_frequency_matrix() for election in experiment.elections.values()]
     start = timer()
-    matrix = copy.deepcopy(initial_matrix)
+    matrix = utils.ic_matrix(experiment.default_num_candidates, experiment.default_num_voters)
     temperature = max_temperature
     distance = utils.score_matrix(matrix, dataset)
 
     for i in range(max_iterations):
-        if i in checkpoints:
-            result.add_partial_result(i, distance, matrix, timer() - start)
+        result.add_partial_result(i, distance, matrix, timer() - start)
 
         m_new = neighbor(matrix, neighbor_weight_function(temperature, max_temperature))
         d_new = utils.score_matrix(matrix, dataset)

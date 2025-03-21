@@ -7,66 +7,65 @@ import prefsampling.ordinal
 import utils
 
 import mapof.elections as mapof
-from timeit import default_timer as timer
 from result import Result
 
 
 def anneal(experiment: mapof.OrdinalElectionExperiment,
-           max_temperature: float,
+           max_temperature: int,
            alpha: float,
            max_iterations: int,
            num_voters: int = 20,
-           checkpoints: list[int] = [],
            changing_votes: int = 1,
            neighbor_strategy: str = 'random',
-           cooling_schedule='linear'):
-    neighbor_function = get_neighbor_function(neighbor_strategy)
-    cooling_schedule_function = get_cooling_schedule_function(cooling_schedule)
-
+           cooling_schedule: str = 'linear',
+           result_id: str = ""
+           ) -> Result:
     parameters = {
-        'max_temperature': max_temperature,
-        'alpha': alpha,
-        'num_voters': num_voters,
-        'changing_votes': changing_votes,
-        'iterations': max_iterations,
-        'neighbor_strategy': neighbor_strategy,
+        'experiment': experiment.experiment_id,
+        'method_name': 'simulated_annealing_voted',
+        'max_temperature': str(max_temperature),
+        'alpha': str(alpha),
+        'num_voters': str(num_voters),
+        'neighbour_strategy': neighbor_strategy,
         'cooling_schedule': cooling_schedule
     }
 
-    result = Result("simulated_annealing_votes", parameters)
-    start = timer()
+    neighbor_function = get_neighbor_function(neighbor_strategy)
+    cooling_schedule_function = get_cooling_schedule_function(cooling_schedule, max_temperature, alpha)
+    result = Result(result_id, parameters)
+
     temperature = max_temperature
     election = mapof.generate_ordinal_election(
         culture_id='impartial',
         num_voters=num_voters,
         num_candidates=experiment.default_num_candidates)
-    distance = utils.score_election(election, experiment)
+    score = utils.score_election(election, experiment)
 
     for i in range(max_iterations):
+        result.add_partial_result(i, score, election)
         new_election = neighbor_function(election, changing_votes, temperature / max_temperature)
-        d_new = utils.score_election(new_election, experiment)
-        delta = d_new - distance
+        score_new = utils.score_election(new_election, experiment)
+        delta = score_new - score
 
         if delta > 0 or math.exp(delta / temperature) >= random.random():
             election = new_election
-            distance = d_new
+            score = score_new
 
-        temperature = cooling_schedule_function(temperature, alpha)
+        temperature = cooling_schedule_function(i)
 
-        if i in checkpoints:
-            result.add_partial_result(i, distance, election, timer() - start)
-
-    result.add_partial_result(max_iterations, distance, election)
-    result.set_result(election=election, score=distance)
+    result.add_partial_result(max_iterations, score, election)
+    result.set_result(election=election, score=score)
 
     return result
 
 
-def get_cooling_schedule_function(cooling_schedule):
+def get_cooling_schedule_function(cooling_schedule, max_temperature, alpha):
     if cooling_schedule == 'linear':
-        return lambda temperature, alpha: temperature - alpha
+        return lambda iteration: max_temperature - alpha * iteration
     elif cooling_schedule == 'exponential':
-        return lambda temperature, alpha: temperature * alpha
+        return lambda iteration: max_temperature * (alpha ** iteration)
+    elif cooling_schedule == 'logarithmic':
+        return lambda iteration: max_temperature / math.log(iteration + 1)
     else:
         raise ValueError('Invalid cooling schedule')
 
@@ -109,7 +108,6 @@ def neighbor_mallows_random(election, change_votes, placeholder):
                                                     num_candidates=election.num_candidates,
                                                     phi=random.random(),
                                                     central_vote=election.votes[i])[0]
-    return mapof.generate_ordinal_election_from_votes(new_votes)
 
 
 def neighbor_mallows_adaptive(election, change_votes, phi):
@@ -119,13 +117,5 @@ def neighbor_mallows_adaptive(election, change_votes, phi):
         new_votes[i] = prefsampling.ordinal.mallows(num_voters=election.num_voters,
                                                     num_candidates=election.num_candidates,
                                                     phi=phi,
-                                                   central_vote=election.votes[i])[0]
+                                                    central_vote=election.votes[i])[0]
     return mapof.generate_ordinal_election_from_votes(new_votes)
-
-
-def cooling_schedule_linear(temperature, alpha):
-    return temperature - alpha
-
-
-def cooling_schedule_exponential(temperature, alpha):
-    return temperature * alpha

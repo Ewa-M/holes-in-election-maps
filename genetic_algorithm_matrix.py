@@ -6,17 +6,25 @@ from timeit import default_timer as timer
 import utils
 from result import Result
 
-def genetic_algorithm(experiment, population_size, max_generations, num_voters=20, check_generations=[]):
-    parameters = {
-        'population_size': population_size,
-        'num_voters': num_voters,
-        'generations': max_generations
-        }
 
-    result = Result("genetic_algorithm_matrix",parameters)
+def genetic_algorithm(experiment,
+                      population_size,
+                      max_generations,
+                      num_voters=20)-> Result:
+
+    parameters = {
+        'experiment': experiment.experiment_id,
+        'method_name': 'genetic_algorithm_matrix',
+        'population_size': str(population_size),
+        'num_voters': str(num_voters),
+        'generations': str(max_generations)
+    }
+
+    result = Result("genetic_algorithm_matrix", parameters)
 
     start = timer()
-    initial_matrices = [utils.ic_matrix(experiment.default_num_candidates, experiment.default_num_candidates) for _ in range(population_size)]
+    initial_matrices = [utils.ic_matrix(experiment.default_num_candidates, experiment.default_num_candidates) for _ in
+                        range(population_size)]
     dataset = [election.get_frequency_matrix() for election in experiment.elections.values()]
 
     population = [{'matrix': matrix, 'score': utils.score_matrix(matrix, dataset)} for matrix in initial_matrices]
@@ -32,13 +40,13 @@ def genetic_algorithm(experiment, population_size, max_generations, num_voters=2
 
         best = max(population, key=lambda e: e['score'])
 
-        if i in check_generations:
-            result.add_partial_result(i, best['score'], best['matrix'], timer() - start)
+        result.add_partial_result(i, best['score'], best['matrix'], timer() - start)
 
     best = max(population, key=lambda e: e['score'])
     result.set_result(score=best['score'], matrix=best['matrix'])
 
     return result
+
 
 def generate_offspring(m1, m2):
     combined = utils.combine_matrices(m1, m2)

@@ -19,22 +19,22 @@ def simulated_annealing_matrix_adaptive_linear_test():
     )
 
     cooling_schedule = 'linear'
-    iterations = 1000
+    iterations = 2
     checkpoints = [i for i in range(iterations)]
 
     for max_temperature, alpha in [(1, 0.001), (2, 0.002), (0.5, 0.0005), (1, 0.009)]:
-        function = lambda: simulated_annealing_matrix.anneal(experiment,
-                                                             max_temperature,
-                                                             alpha,
-                                                             utils.ic_matrix(experiment.default_num_candidates,
+        function = lambda: simulated_annealing_matrix.anneal(experiment=experiment,
+                                                             max_temperature=max_temperature,
+                                                             alpha=alpha,
+                                                             initial_matrix=utils.ic_matrix(experiment.default_num_candidates,
                                                                              experiment.default_num_voters),
-                                                             iterations,
-                                                             1,
-                                                             checkpoints,
-                                                             "adaptive",
-                                                             cooling_schedule)
+                                                             max_iterations=iterations,
+                                                             neighbor_weight=1,
+                                                             checkpoints=checkpoints,
+                                                             neighbor_strategy="adaptive",
+                                                             cooling_schedule=cooling_schedule)
 
-        result.experiment(function, "_".join(["sa", str(max_temperature), str(alpha), cooling_schedule, "adaptive"]), 100)
+        result.multiple_tries(function, "_".join(["sa", str(max_temperature), str(alpha), cooling_schedule, "adaptive"]), 100)
 
 
 if __name__ == "__main__":

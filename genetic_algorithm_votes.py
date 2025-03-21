@@ -5,17 +5,21 @@ import utils
 from result import Result
 
 
-def genetic_algorithm(experiment: mapof.OrdinalElectionExperiment, population_size: int, max_generations: int, num_voters=None, check_generations=None) -> Result:
-    if check_generations is None:
-        check_generations = []
+def genetic_algorithm(experiment: mapof.OrdinalElectionExperiment,
+                      population_size: int,
+                      max_generations: int,
+                      num_voters=None,
+                      ) -> Result:
 
     if num_voters is None:
         num_voters = experiment.default_num_voters
 
     parameters = {
-        'population_size': population_size,
-        'num_voters': num_voters,
-        'generations': max_generations
+        'experiment': experiment.experiment_id,
+        'method_name': 'genetic_algorithm_votes',
+        'population_size': str(population_size),
+        'num_voters': str(num_voters),
+        'generations': str(max_generations)
     }
 
     result = Result("genetic_algorithm_votes", parameters)
@@ -30,6 +34,8 @@ def genetic_algorithm(experiment: mapof.OrdinalElectionExperiment, population_si
                   initial_elections]
     half = population_size // 2
     for i in range(max_generations):
+        result.add_partial_result(i, best['score'], best['election'], timer() - start)
+
         population.sort(key=lambda e: e['score'], reverse=True)
         population = population[:half]
 
@@ -38,8 +44,6 @@ def genetic_algorithm(experiment: mapof.OrdinalElectionExperiment, population_si
             population.append({'election': offspring, 'score': utils.score_election(offspring, experiment)})
 
         best = max(population, key=lambda e: e['score'])
-        if i in check_generations:
-            result.add_partial_result(i, best['score'], best['election'], timer() - start)
 
     best = max(population, key=lambda e: e['score'])
     result.set_result(score=best['score'], election=best['election'])
