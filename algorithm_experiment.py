@@ -56,15 +56,12 @@ def run(parameters):
     repetitions = parameters.reps
     path = './results/' + name
     print(path)
-    computed_count = 0
 
     if not os.path.exists(path):
         os.makedirs(path, exist_ok=True)
         save_parameters(parameters, path)
-    else:
-        computed_count = sum(1 for i in os.listdir(path) if i[:7] == 'scores_')
 
-    for i in range(repetitions - computed_count):
+    for i in range(repetitions):
         algorithm().save_partial(path + "/scores_" + str(uuid.uuid4()) + '.csv')
 
 
