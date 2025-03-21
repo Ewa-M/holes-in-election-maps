@@ -6,7 +6,7 @@ if [ "$#" -lt 1 ]; then
   exit 1
 fi
 
-for i in {1..20}
+for i in {1..19}
 do
   "$@"
 done
